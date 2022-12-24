@@ -1,0 +1,23 @@
+@keyframes ping-small {
+
+    75%,
+    100% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+}
+
+.animate-ping-small {
+    animation: ping-small 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    animation-iteration-count: 1;
+}
+
+.notification {
+    margin: 1rem 0;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+}
