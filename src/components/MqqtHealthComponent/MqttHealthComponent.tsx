@@ -7,7 +7,8 @@ const green_heart = new URL('/src/assets/heart_green.png', import.meta.url).href
 const grey_heart = new URL('/src/assets/heart_grey.png', import.meta.url).href;
 
 const fetchMqttHealth = async () => {
-    const response = await fetch("http://localhost:8080/mqtt/health");
+    // const response = await fetch("http://localhost:8080/mqtt/health");
+    const response = await fetch("http://192.168.0.192:8080/mqtt/health");
     const health = await response.json();
     return health as MqttHealth;
 };
