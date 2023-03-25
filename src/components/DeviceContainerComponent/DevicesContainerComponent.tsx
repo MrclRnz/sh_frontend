@@ -27,7 +27,7 @@ export default function DevicesContainerComponent() {
         <>
             <Grid templateColumns="repeat(6, 1fr)" gap="$6">
                 <For each={devices()}>{(device) =>
-                    <GridItem class="grid-item" onClick={(_e: any) => openModal(device)}>
+                    <GridItem class="grid-item" onClick={() => openModal(device)}>
                         <Box
                             maxW="$sm"
                             borderWidth="1px"
