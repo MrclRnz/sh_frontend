@@ -2,13 +2,13 @@ import { Badge, Box, Grid, GridItem } from "@hope-ui/solid";
 import { createResource, createSignal, For, Match, onCleanup, Show, Switch } from "solid-js";
 import { Device } from "../../models/Device";
 import DeviceModalComponent from "../DeviceModalComponent/DeviceModalComponent";
-
 import "./DevicesContainerComponent.css";
+import config from "../../config/app.config.json";
 
 const led_stripe = new URL('/src/assets/led_stripe.jpg', import.meta.url).href;
 
 const fetchDevices = async () => {
-    const response = await fetch("http://192.168.0.192:8080/devices");
+    const response = await fetch(`http://${config.host}:8080/devices`);
     const health = await response.json();
     return health as Device[];
 };
@@ -16,7 +16,7 @@ const fetchDevices = async () => {
 export default function DevicesContainerComponent() {
     const [devices] = createResource(fetchDevices);
     const [showModal, setShowModal] = createSignal(false);
-    const [selectedDevice, setSelectedDevice] = createSignal({} as Device);
+    const [selectedDevice, setSelectedDevice] = createSignal();
 
     const openModal = (device: Device): void => {
         setSelectedDevice(device);

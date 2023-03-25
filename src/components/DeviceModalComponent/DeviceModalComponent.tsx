@@ -1,6 +1,12 @@
-import { Grid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from "@hope-ui/solid";
+import { Grid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Switch } from "@hope-ui/solid";
+import { createEffect, createSignal } from "solid-js";
 
 export default function DeviceModalComponent(props: any) {
+    const [turnedOn, setPower] = createSignal(props.device.state === "On");
+    createEffect(() => {
+        console.log("Powered on:", turnedOn());
+    });
+
 
     return (
         <>
@@ -15,7 +21,7 @@ export default function DeviceModalComponent(props: any) {
                                 Type: {props.device.dev_type}
                             </GridItem>
                             <GridItem>
-                                State: {props.device.state}
+                                <Switch variant="outline" size="lg" checked={turnedOn()} onChange={(e: any) => setPower(p => !p)}>Power</Switch>
                             </GridItem>
                         </Grid>
 
