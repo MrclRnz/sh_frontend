@@ -1,5 +1,5 @@
 import { Badge, Box, Grid, GridItem } from "@hope-ui/solid";
-import { createResource, createSignal, For, Match, onCleanup, Show, Switch } from "solid-js";
+import { createEffect, createResource, createSignal, For, Show } from "solid-js";
 import { Device } from "../../models/Device";
 import DeviceModalComponent from "../DeviceModalComponent/DeviceModalComponent";
 import "./DevicesContainerComponent.css";
@@ -9,17 +9,17 @@ const led_stripe = new URL('/src/assets/led_stripe.jpg', import.meta.url).href;
 
 const fetchDevices = async () => {
     const response = await fetch(`http://${config.host}:8080/devices`);
-    const health = await response.json();
-    return health as Device[];
+    const devices = await response.json();
+    return devices as Device[];
 };
 
 export default function DevicesContainerComponent() {
     const [devices] = createResource(fetchDevices);
     const [showModal, setShowModal] = createSignal(false);
-    const [selectedDevice, setSelectedDevice] = createSignal();
-
+    const [selectedDevice, setSelectedDevice] = createSignal({} as any);
     const openModal = (device: Device): void => {
-        setSelectedDevice(device);
+        const [turnedOn, setPower] = createSignal(device.state === "On");
+        setSelectedDevice({...device, turnedOn, setPower});
         setShowModal(true);
     };
 
@@ -58,7 +58,7 @@ export default function DevicesContainerComponent() {
                 }</For>
             </Grid>
             <Show when={showModal()}>
-                <DeviceModalComponent showModal={showModal} setShowModal={setShowModal} device={selectedDevice()}></DeviceModalComponent>
+                <DeviceModalComponent showModal={showModal} setShowModal={setShowModal} device={selectedDevice()} turnedOn={selectedDevice().turnedOn} setPower={selectedDevice().setPower}></DeviceModalComponent>
             </Show>
         </>
     );
