@@ -2,8 +2,6 @@ import { Grid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, Modal
 import { createEffect, createSignal } from "solid-js";
 
 export default function DeviceModalComponent(props: any) {
-    const [turnedOn, setPower] = createSignal(props.device.state === "On");
- 
     return (
         <>
             <Modal opened={props.showModal} onClose={() => { props.setShowModal(false) }}>
@@ -17,7 +15,7 @@ export default function DeviceModalComponent(props: any) {
                                 Type: {props.device.dev_type}
                             </GridItem>
                             <GridItem>
-                                <Switch variant="outline" size="lg" checked={turnedOn()} onChange={() => setPower(p => !p)}>Power</Switch>
+                                <Switch variant="outline" size="lg" checked={props.turnedOn()} onChange={() => props.setPower((p: boolean) => !p)}>Power</Switch>
                             </GridItem>
                         </Grid>
 
